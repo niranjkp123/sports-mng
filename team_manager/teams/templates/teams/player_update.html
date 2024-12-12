@@ -1,0 +1,17 @@
+{% extends 'hi.html' %}
+{% load static %}
+
+{% block body %}
+<div class="card">
+    <img class="img-responsive" src="{{ player.image.url }}" alt="{{ player.name }}" style="width:100%">
+    <div>
+        <h4>{{ player.name }}</h4>
+        <p class="title">{{ player.role }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="delete" class="button">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

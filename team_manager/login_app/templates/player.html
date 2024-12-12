@@ -1,0 +1,109 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: grey;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        input[type="decimal"] {
+            background-color: white;
+            width: 480px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 500px;
+        }
+        button:hover {
+            background-color: #45a049; /* Darker green */
+        }
+        .errorlist {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body style="background-image: url(/static/img/about.png); height: 500px;">
+
+    <div class="container">
+        <h1 class="text-center my-4">My players</h1>
+        {% if players %}
+        <div class="row">
+            {% for player in players %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{{ player.image.url }}" style="height: 200px;" class="card-img-top" alt="{{ player.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ player.name }}</h5>
+                        <p class="card-text"><strong>Role: {{ player.role }}</strong></p>
+                                           <!-- Edit Form -->
+                                           <div id="editForm{{ player.id }}" class="edit-form" style="display: none;">
+                                            <h3>Edit Player</h3>
+                                            <form method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                {{ form.as_p }}
+                                                <input type="hidden" name="player_id" value="{{ player.id }}">
+                                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                            </form>
+                                        </div>
+                       
+
+                        <!-- Delete Form -->
+                        <form action="{% url 'delete_player' player.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            
+                            <button type="submit" class="btn btn-danger">Delete</button></a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>NO players Found</p>
+        {% endif %}
+
+        
+    </div><!-- Main Content End -->
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>        

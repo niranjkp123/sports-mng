@@ -1,0 +1,10 @@
+{% extends 'layouts/main.html' %}
+{% load static %}
+<br><br><br><br><br><br><br><br><br><br><br><br>
+{% block body %}
+<div class="container mt-5">
+    <h1>Match Scheduled Successfully!</h1>
+    <p>{{ match.team1 }} vs {{ match.team2 }} on {{ match.date }} at {{ match.location }}</p>
+    <a href="{% url 'match_list' %}" class="btn btn-link">Back to Match List</a>
+</div>
+{% endblock body %}
